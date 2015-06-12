@@ -30,4 +30,5 @@ chmod +x /usr/local/bin/docker-compose
 
 
 # tell docker to listen everywhere (insecure)
-echo 'DOCKER_OPTS="-H tcp://0.0.0.0:4243"' >> /etc/default/docker
+echo 'DOCKER_OPTS="-H tcp://0.0.0.0:4243 -H unix:///var/run/docker.sock"' >> /etc/default/docker
+service docker restart

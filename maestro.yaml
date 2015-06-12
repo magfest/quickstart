@@ -12,7 +12,10 @@ ships:
   vm1:
     ip: vagrant-ubuntu-trusty-64
     docker_port: 4243
+
     # socket_path: "unix://var/run/docker.sock"
+
+    # TODO: later: get SSH tunneling working, right now not doing so well.
     #ssh_tunnel:
     #  user: root
     #  key: /home/vagrant/.ssh/id_rsa
@@ -23,9 +26,12 @@ services:
     instances:
       nginx1:
         ship: vm1
-        ports: { http: 80, https: 443 }
+        ports:
+          http: 80/tcp
+          https: 443/tcp
         #links:
         #  - web
         volumes:
-          config/nginx/conf.d:  /etc/nginx/conf.d
-          config/nginx/certs:   /etc/nginx/certs
+          # TODO: replace with { ENV.home } I think
+          /home/vagrant/docker/config/nginx/conf.d:  /etc/nginx/conf.d
+          /home/vagrant/docker/config/nginx/certs:   /etc/nginx/certs
