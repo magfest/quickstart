@@ -12,9 +12,10 @@ ships:
   vm1:
     ip: vagrant-ubuntu-trusty-64
     docker_port: 4243
-    ssh_tunnel:
-      user: root
-      key: /home/vagrant/.ssh/id_rsa
+    # socket_path: "unix://var/run/docker.sock"
+    #ssh_tunnel:
+    #  user: root
+    #  key: /home/vagrant/.ssh/id_rsa
 
 services:
   nginx:

@@ -1,4 +1,7 @@
 #!/bin/bash
-apt-get install -y python3-yaml fabric
-easy_install3 -U pip
-pip install --user --upgrade maestro-ng
+apt-get install -y fabric
+cd /tmp
+wget https://bootstrap.pypa.io/get-pip.py
+python3 get-pip.py
+pip install virtualenv
+virtualenv /home/vagrant/env
