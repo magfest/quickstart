@@ -48,16 +48,16 @@ services:
 
   nginx:
     requires: [ web ]
-    image: nginx
+    image: shepmaster/nginx-template-image
     instances:
       nginx1:
         ship: vm1
         ports:
           http: 80/tcp
           https: 443/tcp
-        #links:
-        #  web1: web
+        links:
+          web1: web
         volumes:
           # TODO: replace with { ENV.home } I think
-          /home/vagrant/docker/config/nginx/conf.d:  /etc/nginx/conf.d
+          /home/vagrant/docker/config/nginx/conf.d:  /etc/nginx/sites-templates  # TODO: readonly
           /home/vagrant/docker/config/nginx/certs:   /etc/nginx/certs
