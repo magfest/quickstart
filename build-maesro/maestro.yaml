@@ -1,0 +1,30 @@
+__maestro:
+  schema: 2
+
+name: ubersystem
+registries:
+  # Auth credentials for each registry that needs them (see below)
+
+# ship_defaults:
+  # defaults for some of the ship attributes (see below)
+
+ships:
+  vm1:
+    ip: vagrant-ubuntu-trusty-64
+    docker_port: 4243
+    ssh_tunnel:
+      user: root
+      key: /home/vagrant/.ssh/id_rsa
+
+services:
+  nginx:
+    image: nginx
+    instances:
+      nginx1:
+        ship: vm1
+        ports: { http: 80, https: 443 }
+        #links:
+        #  - web
+        volumes:
+          config/nginx/conf.d:  /etc/nginx/conf.d
+          config/nginx/certs:   /etc/nginx/certs

@@ -3,6 +3,14 @@
 # run ubersystem's docker installation in our VM.
 cd /home/vagrant/docker
 
+# hack around "stdin" errs with ubuntu+vagrant
+# see https://github.com/mitchellh/vagrant/issues/1673
+export LANGUAGE=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+locale-gen en_US.UTF-8
+dpkg-reconfigure locales
+
 # install anything this host needs to run docker containers and do builds
 setup/setup.sh
 
