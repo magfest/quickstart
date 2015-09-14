@@ -8,6 +8,7 @@ RUN git clone https://github.com/magfest/sideboard -b docker /uber/sideboard
 WORKDIR /uber/sideboard
 RUN git clone https://github.com/magfest/ubersystem -b master plugins/uber
 
+# TODO: instead of this, run 'paver install_deps' to install all dependencies for all plugins/etc
 RUN /uber/env/bin/pip3 install -e /uber/sideboard
 RUN /uber/env/bin/pip3 install -e /uber/sideboard/plugins/uber
 

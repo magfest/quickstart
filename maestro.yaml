@@ -1,0 +1,63 @@
+__maestro:
+  schema: 2
+
+# TODO: use jinja2 templates to block out dev-only sections of this file
+
+name: ubersystem
+registries:
+  # Auth credentials for each registry that needs them (see below)
+
+# ship_defaults:
+  # defaults for some of the ship attributes (see below)
+
+ships:
+  vm1:
+    ip: vagrant-ubuntu-trusty-64
+    docker_port: 4243
+
+    # socket_path: "unix://var/run/docker.sock"
+
+    # TODO: later: get SSH tunneling working, right now not doing so well.
+    #ssh_tunnel:
+    #  user: root
+    #  key: /home/vagrant/.ssh/id_rsa
+
+services:
+  db:
+    image: postgres
+    instances:
+      db1:
+        ship: vm1
+        env:
+          POSTGRES_PASSWORD: uber_db
+          POSTGRES_USER: uber_db
+          POSTGRES_DB: uber_db
+
+  web:
+    image: magfest/uber-dev:latest
+    requires: [ db ]
+    instances:
+      web1:
+        ship: vm1
+        ports:
+          http: 8282/tcp
+        links:
+          db1: db
+        volumes:
+          /home/vagrant/docker/app: /mnt/app   # DO NOT USE IN PRODUCTION, FOR LOCAL DEV ONLY!
+
+  nginx:
+    requires: [ web ]
+    image: shepmaster/nginx-template-image
+    instances:
+      nginx1:
+        ship: vm1
+        ports:
+          http: 80/tcp
+          https: 443/tcp
+        links:
+          web1: web
+        volumes:
+          # TODO: replace with { ENV.home } I think
+          /home/vagrant/docker/config/nginx/conf.d:  /etc/nginx/sites-templates  # TODO: readonly
+          /home/vagrant/docker/config/nginx/certs:   /etc/nginx/certs

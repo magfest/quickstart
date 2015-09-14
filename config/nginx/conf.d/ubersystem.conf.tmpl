@@ -25,7 +25,7 @@ server {
     }
 
     location /uber/ {
-        proxy_pass          http://web:8282/uber/;
+        proxy_pass          http://${WEB_PORT_8282_TCP_ADDR}:${WEB_WEB1_HTTP_PORT}/uber/;
         proxy_read_timeout  90;
     }
 }
